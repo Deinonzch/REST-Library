@@ -13,4 +13,4 @@ class IsIdUOrReadOnly(permissions.BasePermission):
             return True
 
         # Write permissions are only allowed to the idU of the LendBook.
-        return obj.idU == request.user
+        return obj.user == request.user

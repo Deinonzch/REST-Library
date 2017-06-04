@@ -4,7 +4,6 @@ from rest_framework import serializers
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
-    lend_books = serializers.HyperlinkedRelatedField(many=True, view_name='lend_book-detail', read_only=True)
 
     class Meta:
         model = User
@@ -12,12 +11,13 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class LendBookSerializer(serializers.HyperlinkedModelSerializer):
-    highlight = serializers.HyperlinkedIdentityField(view_name='lend_book-highlight', format='html')
+
     class Meta:
         model = LendBook
-        fields = ('idU', 'idB', 'date_lend', 'date_end_lend', 'give_up')
+        fields = ('user', 'book', 'date_lend', 'date_end_lend', 'give_up')
 
-        idU = serializers.ReadOnlyField(source='idU.id')
+        user = serializers.ReadOnlyField(source='user')
+        book = serializers.ReadOnlyField(source='book')
 
         def validate(self, data):
             """
@@ -29,7 +29,6 @@ class LendBookSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class BookSerializer(serializers.HyperlinkedModelSerializer):
-    lend_books = serializers.HyperlinkedRelatedField(many=True, view_name='lend_book-detail', read_only=True)
 
     class Meta:
         model = Book
